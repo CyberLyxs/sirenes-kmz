@@ -6,8 +6,28 @@
 const STORAGE_KEY_FILES = 'sirenes_kmz_files_v2';
 const STORAGE_KEY_ACTIVE = 'sirenes_kmz_active_files_v2';
 const STORAGE_KEY_THEME = 'sirenes_theme_v1';
+const STORAGE_KEY_AUTH = 'sirenes_auth_v1';
 
 class StorageManager {
+  /**
+   * Check if user is authenticated
+   * @returns {boolean}
+   */
+  static isAuthenticated() {
+    return localStorage.getItem(STORAGE_KEY_AUTH) === 'true';
+  }
+
+  /**
+   * Save authentication state
+   * @param {boolean} status 
+   */
+  static setAuthenticated(status) {
+    if (status) {
+      localStorage.setItem(STORAGE_KEY_AUTH, 'true');
+    } else {
+      localStorage.removeItem(STORAGE_KEY_AUTH);
+    }
+  }
   /**
    * Get all stored files
    * @returns {Array<Object>}

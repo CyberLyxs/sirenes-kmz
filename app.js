@@ -9,7 +9,22 @@ document.addEventListener('DOMContentLoaded', () => {
   let searchQuery = '';
   let selectedPlaceForModal = null;
 
-  // DOM Elements
+  // Password Constant
+  const AUTH_PASSWORD = 'telematica';
+  let listenersInitialized = false;
+
+  // DOM Elements - Auth
+  const authScreen = document.getElementById('authScreen');
+  const authForm = document.getElementById('authForm');
+  const authPasswordInput = document.getElementById('authPasswordInput');
+  const authToggleVisibilityBtn = document.getElementById('authToggleVisibilityBtn');
+  const eyeIconOpen = document.getElementById('eyeIconOpen');
+  const eyeIconClosed = document.getElementById('eyeIconClosed');
+  const authErrorMsg = document.getElementById('authErrorMsg');
+  const lockAppBtn = document.getElementById('lockAppBtn');
+  const appContainer = document.getElementById('appContainer');
+
+  // DOM Elements - Main App
   const themeToggleBtn = document.getElementById('themeToggleBtn');
   const uploadKmzBtn = document.getElementById('uploadKmzBtn');
   const kmzFileInput = document.getElementById('kmzFileInput');
@@ -37,9 +52,65 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================
   function init() {
     initTheme();
-    loadFilesState();
-    setupEventListeners();
-    renderAll();
+    setupAuthListeners();
+    checkAuth();
+  }
+
+  function checkAuth() {
+    if (StorageManager.isAuthenticated()) {
+      authScreen.style.display = 'none';
+      appContainer.style.display = 'flex';
+      loadFilesState();
+      if (!listenersInitialized) {
+        setupEventListeners();
+        listenersInitialized = true;
+      }
+      renderAll();
+    } else {
+      authScreen.style.display = 'flex';
+      appContainer.style.display = 'none';
+      setTimeout(() => {
+        authPasswordInput.focus();
+      }, 100);
+    }
+  }
+
+  function setupAuthListeners() {
+    authForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const entered = (authPasswordInput.value || '').trim().toLowerCase();
+      if (entered === AUTH_PASSWORD) {
+        authErrorMsg.style.display = 'none';
+        authPasswordInput.classList.remove('error');
+        StorageManager.setAuthenticated(true);
+        checkAuth();
+      } else {
+        authPasswordInput.classList.add('error');
+        authErrorMsg.style.display = 'block';
+        authPasswordInput.value = '';
+        authPasswordInput.focus();
+      }
+    });
+
+    authToggleVisibilityBtn.addEventListener('click', () => {
+      const isPassword = authPasswordInput.type === 'password';
+      authPasswordInput.type = isPassword ? 'text' : 'password';
+      eyeIconOpen.style.display = isPassword ? 'none' : 'block';
+      eyeIconClosed.style.display = isPassword ? 'block' : 'none';
+    });
+
+    authPasswordInput.addEventListener('input', () => {
+      if (authPasswordInput.classList.contains('error')) {
+        authPasswordInput.classList.remove('error');
+        authErrorMsg.style.display = 'none';
+      }
+    });
+
+    lockAppBtn.addEventListener('click', () => {
+      StorageManager.setAuthenticated(false);
+      authPasswordInput.value = '';
+      checkAuth();
+    });
   }
 
   // =========================================================
