@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Sirenes - Localizador KMZ</title>
+  <meta name="description" content="Carregue arquivos KMZ e KML, visualize locais salvos e abra direto no Google Maps.">
+  <meta name="theme-color" content="#0d1713">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Sirenes">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- JSZip for client-side KMZ unzipping -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="8"></circle>
+            <line x1="12" y1="2" x2="12" y2="6"></line>
+            <line x1="12" y1="18" x2="12" y2="22"></line>
+            <line x1="2" y1="12" x2="6" y2="12"></line>
+            <line x1="18" y1="12" x2="22" y2="12"></line>
+            <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
+          </svg>
+        </div>
+        <span class="brand-title">SIRENES</span>
+      </div>
+
+      <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Alternar tema">
+        <span class="theme-icon">☀️</span>
+        <span class="theme-label">Claro</span>
+      </button>
+    </header>
+
+    <!-- Main Title -->
+    <section class="hero-section">
+      <h1 class="main-heading">Pesquise a sirene no campo de busca e clique na desejada.</h1>
+    </section>
+
+    <!-- Upload Action Button -->
+    <section class="action-section">
+      <input type="file" id="kmzFileInput" accept=".kmz,.kml" multiple style="display: none;">
+      <button id="uploadKmzBtn" class="btn-primary-upload" type="button">
+        <span class="plus-icon">+</span>
+        <span>Adicionar arquivo KMZ</span>
+      </button>
+    </section>
+
+    <!-- File Selection / Tabs Section -->
+    <section class="files-section">
+      <div class="section-header">
+        <span class="section-title">ESCOLHA UM ARQUIVO</span>
+        <span id="activeFilesCount" class="section-meta">1 arquivo ativo</span>
+      </div>
+
+      <div id="filesListContainer" class="files-carousel">
+        <!-- Rendered dynamically via JS -->
+      </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="search" 
+          id="placesSearchInput" 
+          class="search-input" 
+          placeholder="Buscar um lugar salvo..." 
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+        >
+        <button id="clearSearchBtn" class="clear-search-btn" style="display: none;" aria-label="Limpar busca">
+          ✕
+        </button>
+      </div>
+    </section>
+
+    <!-- Places List Section -->
+    <section class="places-section">
+      <div class="section-header">
+        <span class="section-title">SEUS LUGARES</span>
+        <span id="placesCountBadge" class="section-meta-highlight">0 locais</span>
+      </div>
+
+      <div id="placesListContainer" class="places-list">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+      <!-- Empty state -->
+      <div id="emptyPlacesState" class="empty-state" style="display: none;">
+        <div class="empty-icon">📍</div>
+        <p class="empty-title">Nenhum local encontrado</p>
+        <p class="empty-subtitle">Tente buscar por outro nome ou adicione um arquivo KMZ acima.</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>powered by <strong>Yan</strong></p>
+    </footer>
+  </div>
+
+  <!-- Place Options Modal / Bottom Sheet (for copy / waze / maps options if needed) -->
+  <div id="placeModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-sheet">
+      <div class="modal-drag-bar"></div>
+      <div class="modal-header">
+        <h3 id="modalPlaceTitle" class="modal-title">Nome do Local</h3>
+        <p id="modalPlaceSub" class="modal-sub">Arquivo · Coordenadas</p>
+      </div>
+      <div class="modal-actions">
+        <button id="modalOpenMapsBtn" class="modal-action-btn primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
+          <span>Abrir no Google Maps</span>
+        </button>
+        <button id="modalOpenWazeBtn" class="modal-action-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+          <span>Abrir no Waze</span>
+        </button>
+        <button id="modalCopyCoordsBtn" class="modal-action-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span id="copyCoordsText">Copiar Coordenadas</span>
+        </button>
+      </div>
+      <button id="modalCloseBtn" class="modal-cancel-btn">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="toast" style="display: none;"></div>
+
+  <!-- Scripts -->
+  <script src="storage.js"></script>
+  <script src="kmz-parser.js"></script>
+  <script src="sample-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
