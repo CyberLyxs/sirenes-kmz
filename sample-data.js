@@ -1,8 +1,8 @@
 /**
- * Real data extracted from user KMZ files:
- * Sirenes 1: COORDENADAS_PRECISAS_M1.kmz (194 locais)
- * Sirenes 2: Sirenes Existentes (2).kmz (301 locais)
- * Sirenes 3: TODAS SIRENES.kmz (157 locais)
+ * Real data extracted from user KMZ files with custom additions:
+ * Sirenes 1: COORDENADAS_PRECISAS_M1.kmz (195 locais)
+ * Sirenes 2: Sirenes Existentes (2).kmz (302 locais)
+ * Sirenes 3: TODAS SIRENES.kmz (158 locais)
  */
 
 const SAMPLE_FILES = [
@@ -10,7 +10,7 @@ const SAMPLE_FILES = [
     "id": "sirenes_1",
     "name": "Sirenes 1",
     "fileName": "COORDENADAS_PRECISAS_M1.kmz",
-    "placesCount": 194,
+    "placesCount": 195,
     "places": [
       {
         "id": "p_sirenes_1_1",
@@ -1757,6 +1757,15 @@ const SAMPLE_FILES = [
         "lng": -43.20406,
         "file": "Sirenes 1",
         "formattedCoords": "-19.96011, -43.20406"
+      },
+      {
+        "id": "p_sirenes_1_dig_s14",
+        "name": "DIG-S14",
+        "desc": "<![CDATA[<html xmlns:fo=\"http://www.w3.org/1999/XSL/Format\" xmlns:msxsl=\"urn:schemas-microsoft-com:xslt\">\n\n<head>\n\n<META http-equiv=\"Content-Type\" content=\"text/html\">\n\n<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n\n</head>\n\n<body style=\"margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;\">\n\n<table style=\"font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px\">\n\n<tr style=\"text-align:center;font-weight:bold;background:#9CBCE2\">\n\n<td>DIG-S14</td>\n\n</tr>\n\n<tr>\n\n<td>\n\n<table style=\"font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px\">\n\n<tr>\n\n<td>FID</td>\n\n<td>239</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>TAG</td>\n\n<td>DIG-S14</td>\n\n</tr>\n\n<tr>\n\n<td>R_LEV</td>\n\n<td></td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Lat</td>\n\n<td>-19,923528</td>\n\n</tr>\n\n<tr>\n\n<td>Long</td>\n\n<td>-43,187278</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Coordenadas DMS</td>\n\n<td>19°55'24.7\"S 43°11'14.2\"W</td>\n\n</tr>\n\n<tr>\n\n<td>Datum</td>\n\n<td>SIRGAS2000 / WGS84</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Sit_geral</td>\n\n<td>Fora</td>\n\n</tr>\n\n<tr>\n\n<td>PAEBM</td>\n\n<td></td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>OBS</td>\n\n<td>Adicionado manualmente</td>\n\n</tr>\n\n<tr>\n\n<td>RESPONSVEL</td>\n\n<td>Gerência de Tecnologia</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Estado</td>\n\n<td>Minas Gerais</td>\n\n</tr>\n\n<tr>\n\n<td>Diretoria</td>\n\n<td>Ferrosos</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>STATUS</td>\n\n<td>Aferidas</td>\n\n</tr>\n\n<tr>\n\n<td>COMPLEXO</td>\n\n<td>Minas Centrais</td>\n\n</tr>\n\n</table>\n\n</td>\n\n</tr>\n\n</table>\n\n</body>\n\n</html>]]>",
+        "lat": -19.92353,
+        "lng": -43.18728,
+        "file": "Sirenes 1",
+        "formattedCoords": "-19.92353, -43.18728"
       }
     ]
   },
@@ -1764,7 +1773,7 @@ const SAMPLE_FILES = [
     "id": "sirenes_2",
     "name": "Sirenes 2",
     "fileName": "Sirenes Existentes (2).kmz",
-    "placesCount": 301,
+    "placesCount": 302,
     "places": [
       {
         "id": "p_sirenes_2_1",
@@ -3297,6 +3306,15 @@ const SAMPLE_FILES = [
         "formattedCoords": "-19.95513, -43.17736"
       },
       {
+        "id": "p_sirenes_2_dig_s14",
+        "name": "DIG-S14",
+        "desc": "<![CDATA[<html xmlns:fo=\"http://www.w3.org/1999/XSL/Format\" xmlns:msxsl=\"urn:schemas-microsoft-com:xslt\">\n\n<head>\n\n<META http-equiv=\"Content-Type\" content=\"text/html\">\n\n<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n\n</head>\n\n<body style=\"margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;\">\n\n<table style=\"font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px\">\n\n<tr style=\"text-align:center;font-weight:bold;background:#9CBCE2\">\n\n<td>DIG-S14</td>\n\n</tr>\n\n<tr>\n\n<td>\n\n<table style=\"font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px\">\n\n<tr>\n\n<td>FID</td>\n\n<td>239</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>TAG</td>\n\n<td>DIG-S14</td>\n\n</tr>\n\n<tr>\n\n<td>R_LEV</td>\n\n<td></td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Lat</td>\n\n<td>-19,923528</td>\n\n</tr>\n\n<tr>\n\n<td>Long</td>\n\n<td>-43,187278</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Coordenadas DMS</td>\n\n<td>19°55'24.7\"S 43°11'14.2\"W</td>\n\n</tr>\n\n<tr>\n\n<td>Datum</td>\n\n<td>SIRGAS2000 / WGS84</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Sit_geral</td>\n\n<td>Fora</td>\n\n</tr>\n\n<tr>\n\n<td>PAEBM</td>\n\n<td></td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>OBS</td>\n\n<td>Adicionado manualmente</td>\n\n</tr>\n\n<tr>\n\n<td>RESPONSVEL</td>\n\n<td>Gerência de Tecnologia</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Estado</td>\n\n<td>Minas Gerais</td>\n\n</tr>\n\n<tr>\n\n<td>Diretoria</td>\n\n<td>Ferrosos</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>STATUS</td>\n\n<td>Aferidas</td>\n\n</tr>\n\n<tr>\n\n<td>COMPLEXO</td>\n\n<td>Minas Centrais</td>\n\n</tr>\n\n</table>\n\n</td>\n\n</tr>\n\n</table>\n\n</body>\n\n</html>]]>",
+        "lat": -19.92353,
+        "lng": -43.18728,
+        "file": "Sirenes 2",
+        "formattedCoords": "-19.92353, -43.18728"
+      },
+      {
         "id": "p_sirenes_2_171",
         "name": "DIFS-GONGO-S01",
         "desc": "<![CDATA[<html xmlns:fo=\"http://www.w3.org/1999/XSL/Format\" xmlns:msxsl=\"urn:schemas-microsoft-com:xslt\">\n\n<head>\n\n<META http-equiv=\"Content-Type\" content=\"text/html\">\n\n<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n\n</head>\n\n<body style=\"margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;\">\n\n<table style=\"font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px\">\n\n<tr style=\"text-align:center;font-weight:bold;background:#9CBCE2\">\n\n<td>DIFS-GONGO-S01</td>\n\n</tr>\n\n<tr>\n\n<td>\n\n<table style=\"font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px\">\n\n<tr>\n\n<td>FID</td>\n\n<td>66</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>TAG</td>\n\n<td>DIFS-GONGO-S01</td>\n\n</tr>\n\n<tr>\n\n<td>R_LEV</td>\n\n<td></td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Lat</td>\n\n<td>-19,967579</td>\n\n</tr>\n\n<tr>\n\n<td>Long</td>\n\n<td>-43,602364</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>ZVALE_Orto</td>\n\n<td>1028,9</td>\n\n</tr>\n\n<tr>\n\n<td>Datum</td>\n\n<td>SIRGAS2000</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Sit_geral</td>\n\n<td>Fora</td>\n\n</tr>\n\n<tr>\n\n<td>PAEBM</td>\n\n<td></td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>OBS</td>\n\n<td></td>\n\n</tr>\n\n<tr>\n\n<td>RESPONSVEL</td>\n\n<td>Gerência de Tecnologia</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Estado</td>\n\n<td>Minas Gerais</td>\n\n</tr>\n\n<tr>\n\n<td>Diretoria</td>\n\n<td>Ferrosos</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>STATUS</td>\n\n<td>Aferidas</td>\n\n</tr>\n\n<tr>\n\n<td>Data</td>\n\n<td>27/01/2022</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Barr_vinc</td>\n\n<td></td>\n\n</tr>\n\n<tr>\n\n<td>COMPLEXO</td>\n\n<td>Minas Paralisadas Sudeste</td>\n\n</tr>\n\n</table>\n\n</td>\n\n</tr>\n\n</table>\n\n</body>\n\n</html>]]>",
@@ -4481,7 +4499,7 @@ const SAMPLE_FILES = [
     "id": "sirenes_3",
     "name": "Sirenes 3",
     "fileName": "TODAS SIRENES.kmz",
-    "placesCount": 157,
+    "placesCount": 158,
     "places": [
       {
         "id": "p_sirenes_3_1",
@@ -5895,6 +5913,15 @@ const SAMPLE_FILES = [
         "lng": -43.60834,
         "file": "Sirenes 3",
         "formattedCoords": "-20.11374, -43.60834"
+      },
+      {
+        "id": "p_sirenes_3_dig_s14",
+        "name": "DIG-S14",
+        "desc": "<![CDATA[<html xmlns:fo=\"http://www.w3.org/1999/XSL/Format\" xmlns:msxsl=\"urn:schemas-microsoft-com:xslt\">\n\n<head>\n\n<META http-equiv=\"Content-Type\" content=\"text/html\">\n\n<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n\n</head>\n\n<body style=\"margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;\">\n\n<table style=\"font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px\">\n\n<tr style=\"text-align:center;font-weight:bold;background:#9CBCE2\">\n\n<td>DIG-S14</td>\n\n</tr>\n\n<tr>\n\n<td>\n\n<table style=\"font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px\">\n\n<tr>\n\n<td>FID</td>\n\n<td>239</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>TAG</td>\n\n<td>DIG-S14</td>\n\n</tr>\n\n<tr>\n\n<td>R_LEV</td>\n\n<td></td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Lat</td>\n\n<td>-19,923528</td>\n\n</tr>\n\n<tr>\n\n<td>Long</td>\n\n<td>-43,187278</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Coordenadas DMS</td>\n\n<td>19°55'24.7\"S 43°11'14.2\"W</td>\n\n</tr>\n\n<tr>\n\n<td>Datum</td>\n\n<td>SIRGAS2000 / WGS84</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Sit_geral</td>\n\n<td>Fora</td>\n\n</tr>\n\n<tr>\n\n<td>PAEBM</td>\n\n<td></td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>OBS</td>\n\n<td>Adicionado manualmente</td>\n\n</tr>\n\n<tr>\n\n<td>RESPONSVEL</td>\n\n<td>Gerência de Tecnologia</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Estado</td>\n\n<td>Minas Gerais</td>\n\n</tr>\n\n<tr>\n\n<td>Diretoria</td>\n\n<td>Ferrosos</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>STATUS</td>\n\n<td>Aferidas</td>\n\n</tr>\n\n<tr>\n\n<td>COMPLEXO</td>\n\n<td>Minas Centrais</td>\n\n</tr>\n\n</table>\n\n</td>\n\n</tr>\n\n</table>\n\n</body>\n\n</html>]]>",
+        "lat": -19.92353,
+        "lng": -43.18728,
+        "file": "Sirenes 3",
+        "formattedCoords": "-19.92353, -43.18728"
       }
     ]
   }

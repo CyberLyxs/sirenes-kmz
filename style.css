@@ -11,33 +11,33 @@
   --bg-card-active: #19382b;
   --border-card: #1f332a;
   --border-card-active: #2e7354;
-  
+
   --primary-green: #1c7c59;
   --primary-green-hover: #229369;
   --primary-green-active: #176549;
   --accent-green: #4ade80;
   --accent-green-subtle: rgba(74, 222, 128, 0.15);
-  
+
   --text-primary: #f3f4f6;
   --text-secondary: #7f998e;
   --text-tertiary: #526b61;
   --text-highlight: #4ade80;
-  
+
   --input-bg: #14221d;
   --input-border: #1e332a;
   --input-focus-border: #2e7354;
-  
+
   --badge-bg: #182b24;
   --badge-border: #233e33;
   --badge-dot: #4ade80;
-  
+
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 20px;
   --radius-full: 9999px;
-  
+
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -50,39 +50,42 @@
   --bg-card-active: #e6f4ed;
   --border-card: #d9e5e0;
   --border-card-active: #2e9f73;
-  
+
   --primary-green: #1c8c64;
   --primary-green-hover: #167553;
   --primary-green-active: #125c41;
   --accent-green: #168c64;
   --accent-green-subtle: rgba(28, 140, 100, 0.12);
-  
+
   --text-primary: #111915;
   --text-secondary: #576e63;
   --text-tertiary: #84998f;
   --text-highlight: #15803d;
-  
+
   --input-bg: #ffffff;
   --input-border: #d4e2dc;
   --input-focus-border: #1c8c64;
-  
+
   --badge-bg: #e5f2ec;
   --badge-border: #c8dfd5;
   --badge-dot: #168c64;
-  
+
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 /* Base resets */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html,
+body {
   font-family: var(--font-family);
   background-color: var(--bg-main);
   color: var(--text-primary);
@@ -391,7 +394,7 @@ html, body {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
   border: none;
   color: var(--text-secondary);
   font-size: 10px;
@@ -770,7 +773,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   background-color: var(--bg-main);
-  background-image: 
+  background-image:
     radial-gradient(circle at 50% 20%, rgba(28, 124, 89, 0.18) 0%, transparent 65%),
     radial-gradient(circle at 50% 80%, rgba(74, 222, 128, 0.06) 0%, transparent 50%);
   display: flex;
@@ -990,20 +993,42 @@ html, body {
 
 /* Shake Animation for incorrect password */
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-6px); }
-  40%, 80% { transform: translateX(6px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
 }
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 @keyframes toastIn {
@@ -1011,6 +1036,7 @@ html, body {
     transform: translate(-50%, 20px);
     opacity: 0;
   }
+
   to {
     transform: translate(-50%, 0);
     opacity: 1;

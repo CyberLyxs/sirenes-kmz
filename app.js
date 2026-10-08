@@ -148,9 +148,29 @@ document.addEventListener('DOMContentLoaded', () => {
   function loadFilesState() {
     let stored = StorageManager.getFiles();
     if (!stored || stored.length === 0) {
-      // Use initial samples
-      stored = typeof SAMPLE_FILES !== 'undefined' ? SAMPLE_FILES : [];
+      stored = typeof SAMPLE_FILES !== 'undefined' ? JSON.parse(JSON.stringify(SAMPLE_FILES)) : [];
       StorageManager.saveFiles(stored);
+    } else if (typeof SAMPLE_FILES !== 'undefined') {
+      // Synchronize sample files with any new places added in SAMPLE_FILES
+      let changed = false;
+      SAMPLE_FILES.forEach(sampleFile => {
+        const existing = stored.find(f => f.id === sampleFile.id);
+        if (existing) {
+          sampleFile.places.forEach(samplePlace => {
+            if (!existing.places.some(p => p.id === samplePlace.id || p.name === samplePlace.name)) {
+              existing.places.push(samplePlace);
+              existing.placesCount = existing.places.length;
+              changed = true;
+            }
+          });
+        } else {
+          stored.push(JSON.parse(JSON.stringify(sampleFile)));
+          changed = true;
+        }
+      });
+      if (changed) {
+        StorageManager.saveFiles(stored);
+      }
     }
     allFiles = stored;
 
@@ -253,13 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (searchQuery.trim() !== '') {
-      const q = normalizeString(searchQuery.trim());
-      places = places.filter(p => {
-        return normalizeString(p.name).includes(q) ||
-               (p.desc && normalizeString(p.desc).includes(q)) ||
-               (p.formattedCoords && p.formattedCoords.includes(q)) ||
-               normalizeString(p.file).includes(q);
-      });
+      places = places.filter(p => placeMatchesQuery(p, searchQuery));
     }
 
     return places;
@@ -497,7 +511,49 @@ document.addEventListener('DOMContentLoaded', () => {
   // Utilities
   // =========================================================
   function normalizeString(str) {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    return (str || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  }
+
+  function cleanAlphanumeric(str) {
+    return normalizeString(str).replace(/[^a-z0-9]/g, '');
+  }
+
+  function placeMatchesQuery(place, query) {
+    if (!query) return true;
+    const qNorm = normalizeString(query.trim());
+    const qClean = cleanAlphanumeric(query);
+
+    const pName = normalizeString(place.name);
+    const pNameClean = cleanAlphanumeric(place.name);
+    const pCoords = normalizeString(place.formattedCoords || '');
+    const pDesc = normalizeString(place.desc || '');
+    const pFile = normalizeString(place.file || '');
+
+    // 1. Direct contains in normalized
+    if (pName.includes(qNorm) || pCoords.includes(qNorm) || pDesc.includes(qNorm) || pFile.includes(qNorm)) {
+      return true;
+    }
+
+    // 2. Alphanumeric clean match (ignores dashes, spaces, punctuation)
+    if (qClean.length >= 2) {
+      if (pNameClean.includes(qClean) || cleanAlphanumeric(pDesc).includes(qClean)) {
+        return true;
+      }
+    }
+
+    // 3. Multi-token match (all words in query must be present)
+    const tokens = qNorm.split(/[\s\-_,;/]+/).filter(t => t.length > 0);
+    if (tokens.length > 1) {
+      const fullText = pName + ' ' + pCoords + ' ' + pDesc + ' ' + pFile;
+      const fullTextClean = pNameClean + ' ' + cleanAlphanumeric(pCoords) + ' ' + cleanAlphanumeric(pDesc);
+      const allMatch = tokens.every(token => {
+        const tClean = cleanAlphanumeric(token);
+        return fullText.includes(token) || (tClean.length >= 2 && fullTextClean.includes(tClean));
+      });
+      if (allMatch) return true;
+    }
+
+    return false;
   }
 
   function escapeHtml(str) {

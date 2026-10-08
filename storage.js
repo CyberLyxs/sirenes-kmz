@@ -3,8 +3,8 @@
  * Handles saving/loading files and active selection to localStorage
  */
 
-const STORAGE_KEY_FILES = 'sirenes_kmz_files_v2';
-const STORAGE_KEY_ACTIVE = 'sirenes_kmz_active_files_v2';
+const STORAGE_KEY_FILES = 'sirenes_kmz_files_v3';
+const STORAGE_KEY_ACTIVE = 'sirenes_kmz_active_files_v3';
 const STORAGE_KEY_THEME = 'sirenes_theme_v1';
 const STORAGE_KEY_AUTH = 'sirenes_auth_v1';
 
