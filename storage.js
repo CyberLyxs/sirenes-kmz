@@ -7,25 +7,50 @@ const STORAGE_KEY_FILES = 'sirenes_kmz_files_v4';
 const STORAGE_KEY_ACTIVE = 'sirenes_kmz_active_files_v4';
 const STORAGE_KEY_THEME = 'sirenes_theme_v1';
 const STORAGE_KEY_AUTH = 'sirenes_auth_v1';
+const STORAGE_KEY_AUTH_TIME = 'sirenes_auth_time_v1';
+const SESSION_TIMEOUT_MS = 60 * 60 * 1000; // 1 hora de inatividade
 
 class StorageManager {
   /**
-   * Check if user is authenticated
+   * Check if user is authenticated and session is still valid
    * @returns {boolean}
    */
   static isAuthenticated() {
-    return localStorage.getItem(STORAGE_KEY_AUTH) === 'true';
+    const isAuth = localStorage.getItem(STORAGE_KEY_AUTH) === 'true';
+    if (!isAuth) return false;
+
+    const lastActivity = parseInt(localStorage.getItem(STORAGE_KEY_AUTH_TIME) || '0', 10);
+    const now = Date.now();
+
+    // Expire session if inactive for more than 1 hour
+    if (!lastActivity || (now - lastActivity) > SESSION_TIMEOUT_MS) {
+      this.setAuthenticated(false);
+      return false;
+    }
+
+    return true;
   }
 
   /**
-   * Save authentication state
+   * Update the last activity timestamp to keep the session alive
+   */
+  static updateActivity() {
+    if (localStorage.getItem(STORAGE_KEY_AUTH) === 'true') {
+      localStorage.setItem(STORAGE_KEY_AUTH_TIME, Date.now().toString());
+    }
+  }
+
+  /**
+   * Save authentication state and timestamp
    * @param {boolean} status 
    */
   static setAuthenticated(status) {
     if (status) {
       localStorage.setItem(STORAGE_KEY_AUTH, 'true');
+      localStorage.setItem(STORAGE_KEY_AUTH_TIME, Date.now().toString());
     } else {
       localStorage.removeItem(STORAGE_KEY_AUTH);
+      localStorage.removeItem(STORAGE_KEY_AUTH_TIME);
     }
   }
   /**

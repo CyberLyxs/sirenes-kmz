@@ -15,19 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // DOM Elements - Auth
   const authScreen = document.getElementById('authScreen');
+  const authSubtitle = document.getElementById('authSubtitle');
   const authForm = document.getElementById('authForm');
   const authPasswordInput = document.getElementById('authPasswordInput');
   const authToggleVisibilityBtn = document.getElementById('authToggleVisibilityBtn');
   const eyeIconOpen = document.getElementById('eyeIconOpen');
   const eyeIconClosed = document.getElementById('eyeIconClosed');
   const authErrorMsg = document.getElementById('authErrorMsg');
-  const lockAppBtn = document.getElementById('lockAppBtn');
   const appContainer = document.getElementById('appContainer');
 
   // DOM Elements - Main App
   const themeToggleBtn = document.getElementById('themeToggleBtn');
-  const uploadKmzBtn = document.getElementById('uploadKmzBtn');
-  const kmzFileInput = document.getElementById('kmzFileInput');
   const filesListContainer = document.getElementById('filesListContainer');
   const activeFilesCount = document.getElementById('activeFilesCount');
   const placesSearchInput = document.getElementById('placesSearchInput');
@@ -36,6 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const placesListContainer = document.getElementById('placesListContainer');
   const emptyPlacesState = document.getElementById('emptyPlacesState');
   const toastNotification = document.getElementById('toastNotification');
+
+  // Inactivity tracking (1 hour timeout)
+  let lastActivityTime = Date.now();
+  let inactivityInterval = null;
+  let inactivityListenersAttached = false;
 
   // Modal Elements
   const placeModal = document.getElementById('placeModal');
@@ -58,6 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function checkAuth() {
     if (StorageManager.isAuthenticated()) {
+      if (authSubtitle) {
+        authSubtitle.textContent = 'Digite a senha de acesso para visualizar o sistema e os locais salvos.';
+      }
       authScreen.style.display = 'none';
       appContainer.style.display = 'flex';
       loadFilesState();
@@ -65,14 +71,74 @@ document.addEventListener('DOMContentLoaded', () => {
         setupEventListeners();
         listenersInitialized = true;
       }
+      startInactivityMonitor();
       renderAll();
     } else {
+      if (inactivityInterval) clearInterval(inactivityInterval);
       authScreen.style.display = 'flex';
       appContainer.style.display = 'none';
       setTimeout(() => {
         authPasswordInput.focus();
       }, 100);
     }
+  }
+
+  function handleUserActivity() {
+    const now = Date.now();
+    // Throttle localStorage updates to at most once every 10 seconds
+    if (now - lastActivityTime > 10000) {
+      lastActivityTime = now;
+      StorageManager.updateActivity();
+    }
+  }
+
+  function startInactivityMonitor() {
+    StorageManager.updateActivity();
+    lastActivityTime = Date.now();
+
+    if (!inactivityListenersAttached) {
+      const userEvents = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'touchmove', 'scroll', 'click'];
+      userEvents.forEach(evt => {
+        window.addEventListener(evt, handleUserActivity, { passive: true });
+      });
+
+      // Check immediately when tab becomes active / visible again
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          if (!StorageManager.isAuthenticated()) {
+            lockAppDueToInactivity();
+          } else {
+            handleUserActivity();
+          }
+        }
+      });
+
+      inactivityListenersAttached = true;
+    }
+
+    if (inactivityInterval) clearInterval(inactivityInterval);
+    // Check every 15 seconds if 1 hour of inactivity has passed
+    inactivityInterval = setInterval(() => {
+      if (!StorageManager.isAuthenticated()) {
+        lockAppDueToInactivity();
+      }
+    }, 15000);
+  }
+
+  function lockAppDueToInactivity() {
+    if (inactivityInterval) clearInterval(inactivityInterval);
+    StorageManager.setAuthenticated(false);
+    authPasswordInput.value = '';
+    authErrorMsg.style.display = 'none';
+    authPasswordInput.classList.remove('error');
+    if (authSubtitle) {
+      authSubtitle.textContent = 'Sessão encerrada por inatividade (1 hora). Digite a senha para continuar.';
+    }
+    authScreen.style.display = 'flex';
+    appContainer.style.display = 'none';
+    setTimeout(() => {
+      authPasswordInput.focus();
+    }, 100);
   }
 
   function setupAuthListeners() {
@@ -104,12 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
         authPasswordInput.classList.remove('error');
         authErrorMsg.style.display = 'none';
       }
-    });
-
-    lockAppBtn.addEventListener('click', () => {
-      StorageManager.setAuthenticated(false);
-      authPasswordInput.value = '';
-      checkAuth();
     });
   }
 
@@ -445,33 +505,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function setupEventListeners() {
     // Theme toggle
     themeToggleBtn.addEventListener('click', toggleTheme);
-
-    // Upload KMZ button
-    uploadKmzBtn.addEventListener('click', () => {
-      kmzFileInput.click();
-    });
-
-    kmzFileInput.addEventListener('change', (e) => {
-      handleFileUpload(e.target.files);
-    });
-
-    // Drag & Drop support on upload button
-    uploadKmzBtn.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      uploadKmzBtn.style.opacity = '0.8';
-    });
-
-    uploadKmzBtn.addEventListener('dragleave', () => {
-      uploadKmzBtn.style.opacity = '1';
-    });
-
-    uploadKmzBtn.addEventListener('drop', (e) => {
-      e.preventDefault();
-      uploadKmzBtn.style.opacity = '1';
-      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-        handleFileUpload(e.dataTransfer.files);
-      }
-    });
 
     // Search input
     placesSearchInput.addEventListener('input', (e) => {
