@@ -146,10 +146,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // Data / Storage State
   // =========================================================
   function loadFilesState() {
+    try {
+      localStorage.removeItem('sirenes_kmz_files_v3');
+      localStorage.removeItem('sirenes_kmz_active_files_v3');
+    } catch (e) {}
+
     let stored = StorageManager.getFiles();
-    if (!stored || stored.length === 0) {
+    const hasLegacyFiles = stored && stored.some(f => f.id === 'sirenes_1' || f.id === 'sirenes_2' || f.id === 'sirenes_3');
+    if (!stored || stored.length === 0 || hasLegacyFiles) {
       stored = typeof SAMPLE_FILES !== 'undefined' ? JSON.parse(JSON.stringify(SAMPLE_FILES)) : [];
       StorageManager.saveFiles(stored);
+      if (stored.length > 0) {
+        StorageManager.saveActiveFileIds([stored[0].id]);
+      }
     } else if (typeof SAMPLE_FILES !== 'undefined') {
       // Synchronize sample files with any new places added in SAMPLE_FILES
       let changed = false;
@@ -272,11 +281,26 @@ document.addEventListener('DOMContentLoaded', () => {
       places = places.concat(f.places);
     });
 
+    // Deduplicate if multiple files contain the same place
+    const seenNames = new Set();
+    const uniquePlaces = [];
+    places.forEach(p => {
+      const cleanKey = cleanAlphanumeric(p.name);
+      if (!seenNames.has(cleanKey)) {
+        seenNames.add(cleanKey);
+        uniquePlaces.push(p);
+      }
+    });
+
+    let result = uniquePlaces;
     if (searchQuery.trim() !== '') {
-      places = places.filter(p => placeMatchesQuery(p, searchQuery));
+      result = result.filter(p => placeMatchesQuery(p, searchQuery));
     }
 
-    return places;
+    // Always keep places in strict alphabetical order (A-Z)
+    result.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR', { numeric: true, sensitivity: 'base' }));
+
+    return result;
   }
 
   function renderPlacesList() {
@@ -292,8 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     emptyPlacesState.style.display = 'none';
 
-    // Limit initial render batch to 100 for high performance, with seamless scrolling
-    const itemsToRender = filteredPlaces.slice(0, 150);
+    const itemsToRender = filteredPlaces;
 
     const fragment = document.createDocumentFragment();
 
