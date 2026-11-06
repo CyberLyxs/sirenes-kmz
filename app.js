@@ -211,6 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.removeItem('sirenes_kmz_active_files_v3');
       localStorage.removeItem('sirenes_kmz_files_v4');
       localStorage.removeItem('sirenes_kmz_active_files_v4');
+      localStorage.removeItem('sirenes_kmz_files_v5');
+      localStorage.removeItem('sirenes_kmz_active_files_v5');
     } catch (e) {}
 
     let stored = StorageManager.getFiles();

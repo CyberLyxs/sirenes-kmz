@@ -2,7 +2,7 @@
  * Sirenes KMZ - Base de Dados Unificada e Organizada
  * Contém todos os locais dos arquivos KMZ unificados em 1 só.
  * Locais duplicados foram removidos e organizados em ordem alfabética.
- * Total de locais únicos: 547
+ * Total de locais únicos: 548
  */
 
 const SAMPLE_FILES = [
@@ -10,7 +10,7 @@ const SAMPLE_FILES = [
   "id": "sirenes_unificadas",
   "name": "Todas as Sirenes",
   "fileName": "Sirenes_Unificadas.kmz",
-  "placesCount": 547,
+  "placesCount": 548,
   "places": [
     {
       "id": "p_sirene_1",
@@ -4115,6 +4115,15 @@ const SAMPLE_FILES = [
       "lng": -43.60841,
       "file": "Sirenes",
       "formattedCoords": "-20.11376, -43.60841"
+    },
+    {
+      "id": "p_sirene_548",
+      "name": "PRI-S08",
+      "desc": "<![CDATA[<html xmlns:fo=\"http://www.w3.org/1999/XSL/Format\" xmlns:msxsl=\"urn:schemas-microsoft-com:xslt\">\n\n<head>\n\n<META http-equiv=\"Content-Type\" content=\"text/html\">\n\n<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n\n</head>\n\n<body style=\"margin:0px 0px 0px 0px;overflow:auto;background:#FFFFFF;\">\n\n<table style=\"font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-collapse:collapse;padding:3px 3px 3px 3px\">\n\n<tr style=\"text-align:center;font-weight:bold;background:#9CBCE2\">\n\n<td>PRI-S08</td>\n\n</tr>\n\n<tr>\n\n<td>\n\n<table style=\"font-family:Arial,Verdana,Times;font-size:12px;text-align:left;width:100%;border-spacing:0px; padding:3px 3px 3px 3px\">\n\n<tr>\n\n<td>Sirene</td>\n\n<td>PRI-S08</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>TAG</td>\n\n<td>DIFS-PRI-S08</td>\n\n</tr>\n\n<tr>\n\n<td>Lat</td>\n\n<td>-20,109882</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>Long</td>\n\n<td>-43,603756</td>\n\n</tr>\n\n<tr>\n\n<td>Estado</td>\n\n<td>Minas Gerais</td>\n\n</tr>\n\n<tr bgcolor=\"#D4E4F3\">\n\n<td>COMPLEXO</td>\n\n<td>Mariana</td>\n\n</tr>\n\n</table>\n\n</td>\n\n</tr>\n\n</table>\n\n</body>\n\n</html>]]>",
+      "lat": -20.109882,
+      "lng": -43.603756,
+      "file": "Sirenes",
+      "formattedCoords": "-20.109882, -43.603756"
     },
     {
       "id": "p_sirene_457",
